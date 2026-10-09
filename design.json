@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-09T13:30:44.927922+00:00",
+  "title": "Design System: feminin discovery flow",
+  "extensions": {
+    "colorMeta": {
+      "rust": {
+        "role": "primary",
+        "displayName": "Rust",
+        "canonical": "#76351F"
+      },
+      "clay": {
+        "role": "secondary",
+        "displayName": "Logo Clay",
+        "canonical": "#93604A"
+      },
+      "sand": {
+        "role": "selected",
+        "displayName": "Chosen Sand",
+        "canonical": "#F6EFE9"
+      },
+      "alert": {
+        "role": "alert",
+        "displayName": "Emergency Red",
+        "canonical": "#8E1F12"
+      }
+    },
+    "typographyMeta": {
+      "question": {
+        "displayName": "Belleza question",
+        "purpose": "One question per screen."
+      },
+      "body": {
+        "displayName": "Urbanist",
+        "purpose": "Everything that explains."
+      }
+    },
+    "shadows": [
+      {
+        "name": "suggest",
+        "value": "0 18px 40px -18px rgba(75,42,29,.35)",
+        "purpose": "Suggestion list floating over the page."
+      }
+    ],
+    "motion": [
+      {
+        "name": "step-enter",
+        "value": "0.5s cubic-bezier(.16,1,.3,1), opacity and 10px rise",
+        "purpose": "Each new question arriving; view transitions where supported."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "narrow",
+        "value": "30rem"
+      },
+      {
+        "name": "phone-number",
+        "value": "36rem"
+      }
+    ],
+    "narrative": {
+      "northStar": "Das Erstgespräch",
+      "rules": [
+        {
+          "section": "Colors",
+          "name": "The Chosen Rule"
+        },
+        {
+          "section": "Colors",
+          "name": "The Alert Rule"
+        },
+        {
+          "section": "Typography",
+          "name": "The One Question Rule"
+        }
+      ]
+    }
+  }
+}

@@ -1,8 +1,8 @@
 # feminin discovery
 
-Ein Prototyp für feminin.at: Patientinnen wählen ihre Lebensphase und sehen sofort, welche Angebote im Gesundheitszentrum für sie passen.
+Ein Wegweiser für neue Patientinnen von feminin.at: Sie beschreiben in eigenen Worten, was sie beschäftigt, oder beantworten drei kurze Fragen (Lebensphase, Anliegen, Abrechnung). Am Ende steht eine klare Empfehlung: welches Angebot, wer dafür da ist, wie abgerechnet wird und wie man einen Termin bekommt.
 
-Alles steckt in einer einzigen Datei, `index.html`. Kein Build, keine Installation.
+Keine zweite Homepage, sondern ein Werkzeug. Alles steckt in `index.html`. Kein Build, keine Installation.
 
 ## Ansehen
 
@@ -13,22 +13,22 @@ Alles steckt in einer einzigen Datei, `index.html`. Kein Build, keine Installati
 
 Vibe Coding heißt: Du beschreibst, was du willst, die KI schreibt den Code, du schaust dir das Ergebnis an und sagst, was anders sein soll.
 
-1. Öffne Claude und lade `index.html` hoch.
+1. Öffne Claude und lade `index.html`, `DESIGN.md` und `PRODUCT.md` hoch.
 2. Sag, was du ändern willst. Zum Beispiel:
-   - „Ergänze bei jedem Angebot einen Link auf die passende Seite von feminin.at.“
-   - „Füge eine Lebensphase ‚Ab 60‘ hinzu.“
-   - „Verwende die Farben unseres Logos.“
-   - „Zeige bei jedem Angebot, wer im Team dafür zuständig ist.“
+   - „Patientinnen suchen oft nach ‚Pilzinfektion‘. Ordne das der Vorsorge zu.“
+   - „Füge das Anliegen ‚Endometriose‘ als eigenen Punkt hinzu.“
+   - „Verlinke beim Ergebnis die passende Seite auf feminin.at.“
+   - „Zeige bei der Empfehlung ein Foto der zuständigen Person.“
 3. Lade die neue Datei hier auf GitHub hoch (Add file, Upload files, Commit changes).
 4. Nach etwa einer Minute ist die neue Version live.
 
 ## Wo was steht
 
-Die Inhalte stehen ganz unten in `index.html` in vier Listen:
+Im Skript in `index.html`:
 
-- `PHASES`: die Punkte auf dem Lebensbogen
-- `INTENTS`: die Auswahl „Was führt Sie zu uns?“
-- `SPECS`: die Fachbereiche und ihre Farben
-- `SERVICES`: die Angebote. `p` sind die passenden Lebensphasen, `i` die passenden Anliegen, `w` wer betreut.
+- `SERVICES`: die Angebote mit Beschreibung, Fachbereich und wer betreut
+- `PHASES`: die Lebensphasen in Schritt 1
+- `CONCERNS`: die Anliegen. `l` ist der Text, `p` die Lebensphasen, `s` die passenden Angebote (das erste ist die Hauptempfehlung), `k` die Wörter, die Patientinnen in die Suche tippen
+- `URGENT`: Suchbegriffe, bei denen der Hinweis auf 144 oder 142 erscheint
 
-Angebote und Team stammen von feminin.at (Stand Oktober 2026). Die Zuordnung zu Lebensphasen ist ein Vorschlag, den du prüfen solltest.
+Angebote und Team stammen von feminin.at (Stand Oktober 2026). Anliegen, Suchwörter und Zuordnungen sind ein Vorschlag, den du fachlich prüfen solltest.

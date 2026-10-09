@@ -3,302 +3,492 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>feminin – Was passt zu mir?</title>
+<title>Was beschäftigt Sie? · feminin</title>
+<meta name="description" content="Finden Sie in wenigen Schritten, welches Angebot bei feminin zu Ihrer Lebensphase und Ihrem Anliegen passt.">
+<meta name="theme-color" content="#FFFFFF">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Belleza&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Belleza&family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #FFFFFF;
-    --sand: #F6EEE8;
-    --blush: #EBD9CF;
-    --rust: #7A3A24;
-    --clay: #96604B;
-    --ink: #4A2A1E;
-    --muted: #8A6E62;
-    --line: #E4D4CA;
-    --on-clay: #FFFFFF;
-    --c-gyn: #96604B; --c-pnd: #C58B68; --c-heb: #D3A77F; --c-kid: #8E9B76;
-    --c-mind: #B07F86; --c-body: #C2A15F; --c-aes: #A9877A; --c-chir: #6F5A52; --c-gp: #7F8E93;
-    color-scheme: light;
+:root {
+  --ground: #FFFFFF;
+  --sand: #F6EFE9;
+  --sand-deep: #EEE2D8;
+  --line: #E4D5CA;
+  --rust: #76351F;
+  --clay: #93604A;
+  --text: #4B2A1D;
+  --soft: #7A5D50;
+  --alert: #8E1F12;
+  --alert-bg: #FBEDEA;
+  --display: Belleza, Optima, Candara, "Segoe UI", sans-serif;
+  --sans: Urbanist, "Segoe UI", system-ui, sans-serif;
+  --ease: cubic-bezier(.16, 1, .3, 1);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #1D1512; --sand: #2A201B; --sand-deep: #352920; --line: #3E2F27;
+    --rust: #EFC2A6; --clay: #D29B7F; --text: #F2E6DE; --soft: #C6AA9B; --alert: #FFB4A6; --alert-bg: #3A1D17;
+    color-scheme: dark;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #1E1613; --sand: #2A1F1A; --blush: #3A2A23; --rust: #E9B99F; --clay: #C98D72;
-      --ink: #F4E8E1; --muted: #C2A699; --line: #3D2E27; --on-clay: #1E1613; color-scheme: dark;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #1E1613; --sand: #2A1F1A; --blush: #3A2A23; --rust: #E9B99F; --clay: #C98D72;
-    --ink: #F4E8E1; --muted: #C2A699; --line: #3D2E27; --on-clay: #1E1613; color-scheme: dark;
-  }
+}
+:root[data-theme="dark"] {
+  --ground: #1D1512; --sand: #2A201B; --sand-deep: #352920; --line: #3E2F27;
+  --rust: #EFC2A6; --clay: #D29B7F; --text: #F2E6DE; --soft: #C6AA9B; --alert: #FFB4A6; --alert-bg: #3A1D17;
+  color-scheme: dark;
+}
+:root { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+html, body { overflow-x: clip; }
+html { scroll-padding-top: env(safe-area-inset-top, 0px); scrollbar-color: var(--clay) var(--ground); }
+*, *::before, *::after { box-sizing: inherit; }
+body { margin: 0; min-height: 100vh; background: var(--ground); color: var(--text); font: 400 1.0625rem/1.55 var(--sans); caret-color: var(--rust); overflow-x: hidden; }
+::selection { background: var(--rust); color: var(--ground); }
+:focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; }
+button { font: inherit; color: inherit; cursor: pointer; }
+a { color: inherit; text-underline-offset: 0.2em; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; color: var(--rust); margin: 0; text-wrap: balance; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+svg.i { width: 1.1em; height: 1.1em; flex: none; }
 
-  :root { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
-  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
-  *, *::before, *::after { box-sizing: inherit; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font: 300 1rem/1.6 Outfit, "Segoe UI", system-ui, sans-serif; letter-spacing: 0.01em; }
-  .wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.25rem 3rem; }
-  h1, h2, h3 { font-family: Belleza, "Segoe UI", sans-serif; font-weight: 400; color: var(--rust); }
-  button, input { font: inherit; color: inherit; letter-spacing: inherit; }
-  :focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
+/* the one ornament: a soft sand blob, like the photo masks on feminin.at */
+.blobwrap { position: absolute; z-index: -1; inset: 0 0 auto 0; height: 44rem; overflow: hidden; pointer-events: none; }
+.blob { position: absolute; width: min(70vw, 46rem); right: -16vw; top: -12rem; color: var(--sand); pointer-events: none; }
 
-  header { display: flex; align-items: center; gap: 0.75rem; padding: 1.25rem 0 1rem; border-bottom: 2px solid var(--rust); }
-  .mark { width: 44px; height: 44px; flex: none; }
-  .word { line-height: 1; color: var(--clay); }
-  .word b { font-weight: 600; }
-  .word .name { font-size: 1.6rem; font-weight: 300; letter-spacing: 0.02em; }
-  .word .tag { display: block; font-size: 0.6rem; letter-spacing: 0.22em; margin-top: 0.3rem; font-weight: 400; }
-  .demo { margin-left: auto; font-size: 0.75rem; color: var(--muted); border: 1px solid var(--line); padding: 0.15rem 0.55rem; }
+.wrap { width: min(100% - 2.5rem, 44rem); margin-inline: auto; }
+.top { display: flex; align-items: center; gap: 1rem; padding: 1.1rem 0; }
+.brand { display: flex; align-items: center; gap: 0.7rem; color: var(--clay); text-decoration: none; }
+.brand svg { width: 2.6rem; height: 2.6rem; }
+.brand .w { font: 400 1.55rem/1 var(--sans); letter-spacing: 0.02em; display: block; }
+.brand .w b { font-weight: 700; }
+.brand .t { font: 500 0.7rem/1 var(--sans); letter-spacing: 0.2em; display: block; margin-top: 0.3rem; white-space: nowrap; }
+.call { margin-left: auto; display: inline-flex; align-items: center; gap: 0.5rem; color: var(--rust); text-decoration: none; font-weight: 600; padding: 0.5rem 0; border-bottom: 1.5px solid transparent; }
+.call:hover { border-bottom-color: var(--rust); }
+.call .n { display: none; }
+@media (min-width: 36rem) { .call .n { display: inline; } }
 
-  .hero { position: relative; margin-top: 1.75rem; }
-  .hero::before {
-    content: ""; position: absolute; z-index: -1; left: -1.25rem; right: -1.25rem; top: 8rem; height: 250px;
-    background: var(--sand); border-radius: 58% 42% 51% 49% / 38% 46% 54% 62%;
-  }
-  h1 { font-size: clamp(2rem, 6.5vw, 2.8rem); line-height: 1.1; margin: 0 0 0.6rem; max-width: 15ch; }
-  .lede { color: var(--rust); margin: 0 0 0.5rem; max-width: 32rem; font-weight: 400; }
+/* controls in the house style: square, outlined, rust */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem; padding: 0.85rem 1.3rem; border: 1.5px solid var(--rust); background: transparent; color: var(--rust); font-weight: 600; text-decoration: none; transition: background 0.2s, color 0.2s; }
+.btn:hover { background: var(--sand); }
+.btn.solid { background: var(--rust); color: var(--ground); }
+.btn.solid:hover { background: var(--clay); border-color: var(--clay); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; background: transparent; }
+.link { background: none; border: 0; padding: 0; color: var(--clay); font-weight: 600; text-decoration: underline; text-underline-offset: 0.25em; text-decoration-thickness: 1px; }
 
-  .arc { position: relative; height: 230px; margin: 0.5rem 2rem 1.5rem; }
-  .arc svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-  .arc path { fill: none; vector-effect: non-scaling-stroke; stroke-linecap: round; }
-  .arc .track { stroke: var(--clay); stroke-width: 1.5; opacity: 0.45; }
-  .arc .trail { stroke: var(--clay); stroke-width: 5; }
-  .phase { position: absolute; transform: translate(-50%, -50%); width: 26px; height: 26px; background: none; border: 0; padding: 0; cursor: pointer; }
-  .phase .dot { display: block; width: 22px; height: 22px; margin: 2px; border-radius: 50%; background: var(--bg); border: 1.5px solid var(--clay); transition: transform 0.25s, background 0.25s; }
-  .phase .lbl { position: absolute; left: 50%; transform: translateX(-50%); top: 34px; width: 6.5rem; text-align: center; font-size: 0.82rem; line-height: 1.2; color: var(--muted); font-weight: 400; }
-  .phase.up .lbl { top: auto; bottom: 44px; }
-  .phase[aria-pressed="true"] .dot { background: var(--clay); transform: scale(1.3); }
-  .phase[aria-pressed="true"] .lbl { color: var(--rust); font-weight: 600; }
-  .phase:hover .dot { background: var(--blush); }
-  .phase[aria-pressed="true"]:hover .dot { background: var(--clay); }
+main { padding: clamp(1.5rem, 6vh, 4rem) 0 5rem; }
+.step { animation: enter 0.5s var(--ease) both; }
+@keyframes enter { from { opacity: 0.001; transform: translateY(10px); } }
+@media (prefers-reduced-motion: reduce) { .step, .opt, .chip { animation: none !important; transition: none !important; } }
 
-  .controls { display: grid; gap: 1rem; margin-bottom: 1.75rem; }
-  .q { margin: 0 0 0.5rem; color: var(--rust); font-weight: 500; }
-  .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .chip { border: 1.5px solid var(--rust); background: var(--bg); color: var(--rust); padding: 0.4rem 0.9rem; cursor: pointer; font-weight: 400; }
-  .chip[aria-pressed="true"] { background: var(--rust); color: var(--bg); }
-  .search { width: 100%; border: 0; border-bottom: 1.5px solid var(--clay); background: transparent; padding: 0.6rem 0.1rem; }
-  .search::placeholder { color: var(--muted); }
+.q { font-size: clamp(2.3rem, 7vw, 3.6rem); line-height: 1.05; letter-spacing: -0.005em; }
+.lede { margin: 0.9rem 0 0; color: var(--soft); font-size: 1.125rem; max-width: 34rem; }
 
-  .status { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--line); }
-  .status h2 { font-size: 1.4rem; margin: 0; }
-  .reset { background: none; border: 0; color: var(--clay); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; padding: 0; font-weight: 400; }
+/* progress */
+.progress { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+.bars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.35rem; flex: 1; max-width: 12rem; }
+.bars span { height: 3px; background: var(--line); }
+.bars span.on { background: var(--rust); }
+.progress small { color: var(--soft); font-size: 0.875rem; }
+.back { display: inline-flex; align-items: center; gap: 0.35rem; background: none; border: 0; padding: 0.3rem 0; color: var(--soft); font-weight: 500; }
+.back:hover { color: var(--rust); }
 
-  ul.list { list-style: none; margin: 0; padding: 0; }
-  .item { display: grid; grid-template-columns: 1fr auto; gap: 0.2rem 1.25rem; align-items: center; padding: 1.15rem 0; border-bottom: 1px solid var(--line); }
-  .item h3 { font-size: 1.3rem; margin: 0; line-height: 1.2; }
-  .item p { margin: 0; color: var(--ink); font-size: 0.95rem; grid-column: 1; }
-  .meta { grid-column: 1; font-size: 0.82rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 0.15rem 0.9rem; }
-  .spec { display: inline-flex; align-items: center; gap: 0.4rem; }
-  .spec::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
-  .book { grid-column: 2; grid-row: 1 / span 3; border: 1.5px solid var(--rust); background: var(--bg); color: var(--rust); padding: 0.55rem 1rem; cursor: pointer; white-space: nowrap; font-weight: 400; }
-  .book:hover { background: var(--rust); color: var(--bg); }
-  .empty { padding: 2rem 0; color: var(--muted); }
+/* search */
+.search { position: relative; margin-top: 2rem; }
+.field { display: flex; align-items: center; gap: 0.75rem; border: 1.5px solid var(--rust); background: var(--ground); padding: 0 1rem; }
+.field svg { color: var(--clay); width: 1.35rem; height: 1.35rem; }
+.field input { flex: 1; min-width: 0; border: 0; background: transparent; font: 400 1.2rem/1 var(--sans); color: var(--text); padding: 1.1rem 0; }
+.field input::placeholder { color: var(--soft); opacity: 1; }
+.field input:focus { outline: none; }
+.field:focus-within { box-shadow: 0 0 0 3px var(--sand-deep); }
+.clear[hidden] { display: none; }
+.clear { background: none; border: 0; color: var(--soft); padding: 0.4rem; display: grid; place-items: center; }
+.suggest { position: absolute; z-index: 5; left: 0; right: 0; top: calc(100% - 1.5px); background: var(--ground); border: 1.5px solid var(--rust); border-top-color: var(--line); max-height: min(60vh, 28rem); overflow-y: auto; box-shadow: 0 18px 40px -18px rgba(75, 42, 29, 0.35); }
+.suggest[hidden] { display: none; }
+.sgroup { padding: 0.5rem 0; }
+.sgroup + .sgroup { border-top: 1px solid var(--line); }
+.sgroup h3 { font: 600 0.8rem/1 var(--sans); color: var(--soft); padding: 0.6rem 1rem 0.4rem; letter-spacing: 0.02em; }
+.sopt { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.6rem 1rem; cursor: pointer; }
+.sopt .sub { color: var(--soft); font-size: 0.875rem; text-align: right; }
+.sopt[aria-selected="true"], .sopt:hover { background: var(--sand); }
+mark { background: none; color: var(--rust); font-weight: 700; }
+.snone { padding: 1rem; color: var(--soft); }
 
-  footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 2px solid var(--rust); display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 1.25rem; font-size: 0.9rem; color: var(--muted); }
-  footer h3 { font-size: 1.1rem; margin: 0 0 0.35rem; }
-  footer p { margin: 0; }
-  footer a { color: var(--clay); }
-  .fine { grid-column: 1 / -1; font-size: 0.8rem; }
+.quick { margin-top: 1.5rem; }
+.quick p { margin: 0 0 0.6rem; color: var(--soft); font-size: 0.9375rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.chip { display: inline-flex; align-items: center; gap: 0.45rem; border: 1.5px solid var(--line); background: var(--ground); padding: 0.55rem 0.9rem; font-weight: 500; transition: border-color 0.2s, background 0.2s; }
+.chip:hover { border-color: var(--clay); }
+.chip[aria-pressed="true"] { background: var(--sand); border-color: var(--rust); color: var(--rust); }
+.chip .ck { display: none; }
+.chip[aria-pressed="true"] .ck { display: block; }
 
-  dialog { border: 0; padding: 1.75rem 1.25rem calc(1.5rem + env(safe-area-inset-bottom, 0px)); width: 100%; max-width: 44rem; margin: auto auto 0; background: var(--bg); color: var(--ink); border-top: 3px solid var(--clay); }
-  dialog::backdrop { background: rgba(74, 42, 30, 0.45); }
-  dialog h2 { margin: 0 0 0.35rem; font-size: 1.6rem; }
-  dialog p { margin: 0 0 1rem; }
-  .who { color: var(--muted); font-size: 0.9rem; }
-  .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 0.6rem; }
-  .actions a, .close { display: block; text-align: center; padding: 0.8rem; text-decoration: none; border: 1.5px solid var(--rust); cursor: pointer; }
-  .actions a.primary { background: var(--rust); color: var(--bg); }
-  .actions a.secondary { color: var(--rust); }
-  .close { width: 100%; background: none; color: var(--muted); border-color: var(--line); }
+.or { display: flex; align-items: center; gap: 1rem; margin: 2.75rem 0 1.25rem; color: var(--soft); font-size: 0.9375rem; }
+.or::before, .or::after { content: ""; height: 1px; background: var(--line); flex: 1; }
+.guided { display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%; text-align: left; border: 0; border-top: 2px solid var(--rust); border-bottom: 2px solid var(--rust); background: transparent; padding: 1.25rem 0.25rem; }
+.guided strong { display: block; font: 400 1.6rem/1.15 var(--display); color: var(--rust); }
+.guided span { color: var(--soft); }
+.guided svg { width: 1.6rem; height: 1.6rem; color: var(--rust); transition: transform 0.3s var(--ease); }
+.guided:hover svg { transform: translateX(4px); }
 
-  @media (max-width: 30rem) {
-    .item { grid-template-columns: 1fr; }
-    .book { grid-column: 1; grid-row: auto; justify-self: start; margin-top: 0.6rem; }
-  }
-  @media (prefers-reduced-motion: reduce) { .phase .dot { transition: none; } }
+/* option rows */
+.opts { margin-top: 2rem; border-top: 1px solid var(--line); }
+.opt { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 0.15rem 1rem; width: 100%; text-align: left; background: transparent; border: 0; border-bottom: 1px solid var(--line); padding: 1.05rem 0.75rem; transition: background 0.2s; }
+.opt b { font: 400 1.45rem/1.2 var(--display); color: var(--rust); }
+.opt span { grid-column: 1; color: var(--soft); font-size: 0.9375rem; }
+.opt svg { grid-column: 2; grid-row: 1 / span 2; width: 1.3rem; height: 1.3rem; color: var(--clay); transition: transform 0.3s var(--ease); }
+.opt:hover { background: var(--sand); }
+.opt:hover svg { transform: translateX(3px); }
+.opt[aria-pressed="true"] { background: var(--sand); }
+
+.groups { margin-top: 2rem; display: grid; gap: 1.6rem; }
+.groups h3 { font: 600 0.92rem/1.2 var(--sans); color: var(--soft); margin-bottom: 0.6rem; }
+.next { position: sticky; bottom: 0; margin-top: 2rem; padding: 1rem 0 calc(1rem + env(safe-area-inset-bottom, 0px)); background: linear-gradient(to bottom, transparent, var(--ground) 30%); display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.next .btn { min-width: 13rem; }
+.next small { color: var(--soft); }
+
+/* result */
+.mine { display: flex; flex-wrap: wrap; gap: 0.4rem 0.5rem; margin: 1.25rem 0 0; padding: 0; list-style: none; }
+.mine li { background: var(--sand); padding: 0.3rem 0.7rem; font-size: 0.9375rem; color: var(--text); }
+.urgent { margin-top: 1.5rem; background: var(--alert-bg); color: var(--alert); padding: 1rem 1.15rem; display: flex; gap: 0.75rem; align-items: flex-start; }
+.urgent svg { margin-top: 0.15rem; }
+.urgent p { margin: 0; }
+.urgent a { font-weight: 700; }
+.best { margin-top: 2rem; border: 2px solid var(--rust); padding: clamp(1.25rem, 4vw, 2rem); }
+.best .why { margin: 0 0 0.75rem; color: var(--clay); font-weight: 600; font-size: 0.9375rem; }
+.best h2 { font-size: clamp(2rem, 5.5vw, 2.8rem); line-height: 1.05; }
+.best .d { margin: 0.75rem 0 1.25rem; font-size: 1.125rem; max-width: 32rem; }
+.facts { display: grid; gap: 0.9rem; margin: 0 0 1.5rem; padding: 1.1rem 0 0; border-top: 1px solid var(--line); }
+.facts div { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1rem; }
+.facts dt { color: var(--soft); font-size: 0.9375rem; }
+.facts dd { margin: 0; }
+@media (max-width: 30rem) { .facts div { grid-template-columns: 1fr; gap: 0.1rem; } }
+.acts { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.also { margin-top: 2.75rem; }
+.also > h2 { font-size: 1.7rem; padding-bottom: 0.7rem; border-bottom: 2px solid var(--rust); }
+.also ul { list-style: none; margin: 0; padding: 0; }
+.alt { display: grid; grid-template-columns: 1fr auto; gap: 0.2rem 1rem; align-items: center; padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
+.alt h3 { font-size: 1.35rem; line-height: 1.2; }
+.alt p { margin: 0; color: var(--soft); font-size: 0.9375rem; grid-column: 1; }
+.alt .btn { grid-column: 2; grid-row: 1 / span 2; padding: 0.6rem 0.9rem; font-size: 0.9375rem; }
+@media (max-width: 30rem) { .alt { grid-template-columns: 1fr; } .alt .btn { grid-column: 1; grid-row: auto; justify-self: start; margin-top: 0.5rem; } }
+.restart { margin-top: 2.5rem; display: flex; flex-wrap: wrap; gap: 1.5rem; }
+.note { margin-top: 3rem; color: var(--soft); font-size: 0.875rem; max-width: 36rem; }
 </style>
 </head>
 <body>
+<div class="blobwrap" aria-hidden="true"><svg class="blob" viewBox="0 0 600 560"><path fill="currentColor" d="M318 24c92-14 205 30 252 118 47 87 22 205-42 286-64 80-168 124-262 112C171 528 86 462 44 374 2 287 3 177 64 106 125 35 226 38 318 24Z"/></svg></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M5 3.5h3.2l1.6 4.2-2.2 1.4a11 11 0 0 0 5.3 5.3l1.4-2.2 4.2 1.6V17a2.5 2.5 0 0 1-2.7 2.5A15.5 15.5 0 0 1 2.5 6.2 2.5 2.5 0 0 1 5 3.5Z"/></symbol>
+  <symbol id="mail" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M3.5 5.5h17v13h-17zM3.8 6l8.2 7 8.2-7"/></symbol>
+  <symbol id="search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path stroke="currentColor" stroke-width="1.6" d="m15.5 15.5 5 5"/></symbol>
+  <symbol id="arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+  <symbol id="left" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M20 12H5m6-6-6 6 6 6"/></symbol>
+  <symbol id="x" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.6" d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path stroke="currentColor" stroke-width="1.8" d="M12 7.5v6M12 16v1.5"/></symbol>
+</svg>
+
 <div class="wrap">
-  <header>
-    <svg class="mark" viewBox="0 0 44 44" aria-hidden="true">
-      <circle cx="22" cy="22" r="22" fill="var(--clay)"/>
-      <path d="M6.5 6.5 37.5 37.5M37.5 6.5 6.5 37.5" stroke="var(--bg)" stroke-width="1"/>
-      <rect x="17.5" y="17.5" width="9" height="9" transform="rotate(45 22 22)" fill="none" stroke="var(--bg)" stroke-width="1"/>
-    </svg>
-    <div class="word"><span class="name">fe<b>min</b>in</span><span class="tag">FRAU* MUTTER* KIND</span></div>
-    <span class="demo">Prototyp</span>
+  <header class="top">
+    <a class="brand" href="https://feminin.at" aria-label="feminin.at, Frau* Mutter* Kind">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="24" fill="#93604A"/><path d="M7 7 19.6 19.6M28.4 28.4 41 41M41 7 28.4 19.6M19.6 28.4 7 41M24 15.2 32.8 24 24 32.8 15.2 24Z" fill="none" stroke="#fff" stroke-width="1.1"/></svg>
+      <span><span class="w">fe<b>min</b>in</span><span class="t">FRAU* MUTTER* KIND</span></span>
+    </a>
+    <a class="call" href="tel:+4313940108"><svg class="i"><use href="#phone"/></svg><span class="n">+43 1 394 01 08</span><span class="sr">Anrufen</span></a>
   </header>
-
-  <section class="hero">
-    <h1>Was passt gerade zu Ihrem Leben?</h1>
-    <p class="lede">Wählen Sie Ihre Lebensphase. Wir zeigen Ihnen, wer Sie bei feminin begleitet.</p>
-    <div class="arc" id="arc" role="group" aria-label="Lebensphase wählen">
-      <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        <path class="track" d="M0,85 Q50,-5 100,85"/>
-        <path class="trail" id="trail" d=""/>
-      </svg>
-    </div>
-  </section>
-
-  <div class="controls">
-    <div>
-      <p class="q" id="intentLabel">Was führt Sie zu uns?</p>
-      <div class="chips" id="intents" role="group" aria-labelledby="intentLabel"></div>
-    </div>
-    <input class="search" id="search" type="search" placeholder="Suchen, z. B. Stillberatung" aria-label="Angebote und Team durchsuchen">
-  </div>
-
-  <div class="status">
-    <h2 id="count" aria-live="polite"></h2>
-    <button class="reset" id="reset" hidden>Alles zeigen</button>
-  </div>
-  <ul class="list" id="list"></ul>
-
-  <footer>
-    <div><h3>Ordination</h3><p><a href="tel:+4313940108">+43 1 394 01 08</a><br><a href="mailto:ordination@feminin.at">ordination@feminin.at</a><br>Nusswaldgasse 5, 1190 Wien</p></div>
-    <div><h3>Ordinationszeiten</h3><p>Mo 7:00 bis 19:00<br>Di bis Do 8:00 bis 19:00<br>Fr 7:00 bis 14:00</p></div>
-    <div><h3>Krankenkasse</h3><p>Dr. Patrik Horak betreut Kassenpatient:innen aller Kassen. Alle anderen sind Wahlärzt:innen, wir leiten Ihre Honorarnote an Ihre Kasse weiter.</p></div>
-    <p class="fine">Prototyp. Angebote und Team von feminin.at übernommen, die Zuordnung zu Lebensphasen ist ein Vorschlag. Kein Ersatz für ärztliche Beratung.</p>
-  </footer>
+  <main id="app" aria-live="polite"></main>
 </div>
 
-<dialog id="sheet" aria-labelledby="sheetTitle">
-  <h2 id="sheetTitle"></h2>
-  <p class="who" id="sheetWho"></p>
-  <p id="sheetText"></p>
-  <div class="actions">
-    <a class="primary" href="tel:+4313940108">Anrufen</a>
-    <a class="secondary" id="sheetMail" href="mailto:ordination@feminin.at">E-Mail schreiben</a>
-  </div>
-  <button class="close" id="sheetClose">Schließen</button>
-</dialog>
-
 <script>
-// Content from feminin.at (October 2026). Phase and intent mapping is a proposal.
-const ALL = ["jugend", "wunsch", "schwanger", "geburt", "wechsel"];
-const PHASES = [
-  { id: "jugend", label: "Jugend" },
-  { id: "wunsch", label: "Kinderwunsch" },
-  { id: "schwanger", label: "Schwanger" },
-  { id: "geburt", label: "Mit Baby" },
-  { id: "wechsel", label: "Wechseljahre" }
-];
-const INTENTS = [
-  { id: "vorsorge", label: "Vorsorge" },
-  { id: "beschwerden", label: "Beschwerden" },
-  { id: "beratung", label: "Beratung" },
-  { id: "koerper", label: "Wohlbefinden" },
-  { id: "kind", label: "Für mein Kind" }
-];
-const SPECS = {
-  gyn:  { label: "Gynäkologie", c: "--c-gyn" },
-  pnd:  { label: "Pränataldiagnostik", c: "--c-pnd" },
-  heb:  { label: "Hebammen", c: "--c-heb" },
-  kid:  { label: "Kinderheilkunde", c: "--c-kid" },
-  mind: { label: "Mentale Gesundheit", c: "--c-mind" },
-  body: { label: "Medizin und Körper", c: "--c-body" },
-  aes:  { label: "feminin.aesthetic", c: "--c-aes" },
-  chir: { label: "Chirurgie", c: "--c-chir" },
-  gp:   { label: "Allgemeinmedizin", c: "--c-gp" }
+/* Content from feminin.at (Oct 2026). Concern wording and the mapping to services are a proposal for the center to confirm. */
+const TEL = "+4313940108", MAIL = "ordination@feminin.at";
+const GYN12 = "Unsere zwölf Frauenärzt:innen";
+
+const SERVICES = {
+  erstbesuch:  { t: "Erster Besuch bei der Frauenärzt:in", d: "Ein ruhiges Kennenlernen. Untersucht wird nur, wenn Sie das möchten.", f: "Gynäkologie", w: GYN12, gyn: true },
+  vorsorge:    { t: "Gynäkologische Vorsorge", d: "Der jährliche Check mit Krebsabstrich und Tastuntersuchung, auf Wunsch mit Ultraschall.", f: "Gynäkologie", w: GYN12, gyn: true },
+  verhuetung:  { t: "Verhütungsberatung", d: "Welche Methode passt zu Ihrem Körper und Ihrem Alltag? Pille, Spirale und Alternativen im Vergleich.", f: "Gynäkologie", w: GYN12, gyn: true },
+  zyklus:      { t: "Zyklus und Regelschmerzen abklären", d: "Wenn Schmerzen, Blutungen oder ein unregelmäßiger Zyklus Ihren Alltag bestimmen.", f: "Gynäkologie", w: GYN12, gyn: true },
+  kinderwunsch:{ t: "Kinderwunsch", d: "Erste Gespräche und Untersuchungen, wenn es nicht von selbst klappt.", f: "Gynäkologie", w: GYN12, gyn: true },
+  schwanger:   { t: "Betreuung in der Schwangerschaft", d: "Alle Kontrollen bis zur Geburt, an einem Ort und bei vertrauten Gesichtern.", f: "Gynäkologie", w: GYN12, gyn: true },
+  praenatal:   { t: "Pränataldiagnostik", d: "Detaillierte Ultraschalluntersuchungen, die zeigen, wie sich Ihr Baby entwickelt.", f: "Pränataldiagnostik", w: "Dr. Allessandra Aisha Tramontana-Handler, MSc" },
+  hebamme:     { t: "Hebammenbetreuung", d: "Begleitung vor und nach der Geburt, persönlich und vertraut.", f: "Hebammen", w: "Tina Schubert, BSc · Stephanie Kulhanek, MSc · Dr. Gulistan Salaschor, BSc" },
+  still:       { t: "Stillberatung", d: "Wenn das Stillen schmerzt, stockt oder einfach Fragen offen sind.", f: "Hebammen", w: "Tina Schubert, BSc, Still- und Laktationsberaterin IBCLC" },
+  abbruch:     { t: "Beratung bei ungeplanter Schwangerschaft", d: "Vertrauliche Beratung und, wenn Sie sich dafür entscheiden, ein Schwangerschaftsabbruch in einem geschützten Rahmen.", f: "Gynäkologie", w: GYN12, gyn: true },
+  wechsel:     { t: "Begleitung durch die Wechseljahre", d: "Hitzewallungen, Schlaf, Stimmung: was hilft und was zu Ihnen passt.", f: "Gynäkologie", w: GYN12, gyn: true },
+  op:          { t: "Ambulante Operationen", d: "Kleinere Eingriffe im hauseigenen Eingriffsraum, ohne Aufenthalt im Spital.", f: "Chirurgie und Gynäkologie", w: "Priv.-Doz. Dr. Simone Gruber-Blum · Priv.-Doz. Dr. Alexander Petter-Puchner" },
+  psycho:      { t: "Psychotherapie", d: "Ein geschützter Raum für Erschöpfung, Ängste oder Traurigkeit.", f: "Mentale Gesundheit", w: "Michaela Kraus" },
+  sexual:      { t: "Sexualtherapie", d: "Ein offenes Gespräch über Lust, Schmerz und Nähe.", f: "Mentale Gesundheit", w: "Tina Gossak, BSc" },
+  becken:      { t: "Beckenbodentherapie", d: "Gezielte Physiotherapie, damit Blase und Beckenboden wieder stark werden.", f: "Physiotherapie", w: "Unsere Physiotherapeutinnen" },
+  physio:      { t: "Physiotherapie und Lymphdrainage", d: "Für Rücken, Gelenke und schwere Beine, auch in der Schwangerschaft.", f: "Physiotherapie", w: "Bernadette Hochstätter · Yvonne Kubat · Stefanie Wedam" },
+  yoga:        { t: "Yoga und Pilates", d: "femfit-Kurse, die Körper und Kopf zur Ruhe bringen.", f: "femfit", w: "femfit" },
+  infusion:    { t: "Infusionstherapie", d: "femdrop: Infusionen, die helfen, sich von innen heraus besser zu fühlen.", f: "femdrop", w: "femdrop" },
+  shiatsu:     { t: "Shiatsu", d: "Achtsame Körperarbeit zum Loslassen.", f: "Shiatsu", w: "Lisa Prantl, BA BSc" },
+  ernaehrung:  { t: "Ernährungsberatung", d: "Essen, das zu Ihrer Lebensphase passt, ohne Verbote.", f: "Ernährung", w: "Mag. Veronika Ottenschläger" },
+  haut:        { t: "Hautärztliche Untersuchung", d: "Muttermale kontrollieren, Hautveränderungen und Beschwerden abklären.", f: "Dermatologie", w: "OÄ Dr. Liliane Borik-Heil" },
+  kosmetik:    { t: "Kosmetik", d: "Behandlungen bei feminin.aesthetic, einfach zum Wohlfühlen.", f: "feminin.aesthetic", w: "feminin.aesthetic" },
+  allgemein:   { t: "Allgemeinmedizin", d: "Die erste Anlaufstelle, wenn Sie nicht wissen, wohin mit Ihren Beschwerden.", f: "Allgemeinmedizin", w: "Dr. Irina Televca Prini" },
+  kinderarzt:  { t: "Kinderärztliche Betreuung", d: "Vorsorge, Impfungen und Hilfe, wenn Ihr Kind krank ist.", f: "Kinder- und Jugendheilkunde", w: "Dr. Astrid Ladurner-Mittnik" },
+  saeugling:   { t: "Säuglingspsychosomatik", d: "Wenn Ihr Baby viel schreit, schlecht schläft oder schlecht trinkt.", f: "Kinder- und Jugendheilkunde", w: "Dr. Astrid Ladurner-Mittnik" },
+  ergo:        { t: "Ergotherapie", d: "Unterstützung bei Entwicklung, Bewegung und im Alltag.", f: "Ergotherapie", w: "Kathrin Habermann, MSc MA" }
 };
-const GYN = "Unser Team aus elf Frauenärzt:innen";
-const SERVICES = [
-  { t: "Erster Besuch bei der Frauenärzt:in", d: "Ein ruhiges Kennenlernen. Eine Untersuchung nur, wenn Sie das möchten.", s: "gyn", p: ["jugend"], i: ["beratung"], w: GYN },
-  { t: "Verhütungsberatung", d: "Welche Methode passt zu Ihrem Körper und Ihrem Alltag?", s: "gyn", p: ["jugend", "geburt"], i: ["beratung"], w: GYN },
-  { t: "Gynäkologische Vorsorge", d: "Der jährliche Check, auch mit Kasse möglich.", s: "gyn", p: ALL.filter(x => x !== "schwanger"), i: ["vorsorge"], w: "Mit Kasse: Dr. Patrik Horak" },
-  { t: "Zyklus und Regelschmerzen abklären", d: "Wenn Schmerzen oder ein unregelmäßiger Zyklus den Alltag bestimmen.", s: "gyn", p: ["jugend", "wunsch"], i: ["beschwerden"], w: GYN },
-  { t: "Kinderwunsch", d: "Erste Gespräche und Untersuchungen, wenn es nicht von selbst klappt.", s: "gyn", p: ["wunsch"], i: ["beratung", "beschwerden"], w: GYN },
-  { t: "Betreuung in der Schwangerschaft", d: "Alle Kontrollen bis zur Geburt, an einem Ort.", s: "gyn", p: ["schwanger"], i: ["vorsorge"], w: GYN },
-  { t: "Pränataldiagnostik", d: "Detaillierte Ultraschalluntersuchungen zur Entwicklung Ihres Babys.", s: "pnd", p: ["schwanger"], i: ["vorsorge"], w: "Dr. Allessandra Aisha Tramontana-Handler, MSc" },
-  { t: "Hebammenbetreuung", d: "Begleitung vor und nach der Geburt, persönlich und vertraut.", s: "heb", p: ["schwanger", "geburt"], i: ["beratung"], w: "Tina Schubert, Stephanie Kulhanek, Dr. Gulistan Salaschor" },
-  { t: "Stillberatung", d: "Wenn das Stillen schmerzt, stockt oder einfach Fragen offen sind.", s: "heb", p: ["geburt"], i: ["beratung", "beschwerden"], w: "Tina Schubert, BSc, Still- und Laktationsberaterin IBCLC" },
-  { t: "Schwangerschaftsabbruch", d: "Vertrauliche Beratung und Begleitung in einem geschützten Rahmen.", s: "gyn", p: ["schwanger"], i: ["beratung"], w: GYN },
-  { t: "Begleitung durch die Wechseljahre", d: "Hitzewallungen, Schlaf, Stimmung: was hilft und was zu Ihnen passt.", s: "gyn", p: ["wechsel"], i: ["beratung", "beschwerden"], w: GYN },
-  { t: "Ambulante Operationen", d: "Kleinere Eingriffe im hauseigenen Eingriffsraum, ohne Spitalsaufenthalt.", s: "chir", p: ["wunsch", "geburt", "wechsel"], i: ["beschwerden"], w: "Priv.-Doz. Dr. Simone Gruber-Blum, Priv.-Doz. Dr. Alexander Petter-Puchner" },
-  { t: "Psychotherapie", d: "Raum für Erschöpfung, Ängste oder Traurigkeit, in jeder Lebensphase.", s: "mind", p: ALL, i: ["beratung", "beschwerden"], w: "Michaela Kraus" },
-  { t: "Sexualtherapie", d: "Ein offenes Gespräch über Lust, Schmerz und Nähe.", s: "mind", p: ["wunsch", "geburt", "wechsel"], i: ["beratung", "beschwerden"], w: "Tina Gossak, BSc" },
-  { t: "Beckenbodentherapie", d: "Gezielte Physiotherapie nach der Geburt und in den Wechseljahren.", s: "body", p: ["geburt", "wechsel"], i: ["koerper", "beschwerden"], w: "Unsere Physiotherapeutinnen" },
-  { t: "Physiotherapie und Lymphdrainage", d: "Für Rücken, Gelenke und schwere Beine, auch in der Schwangerschaft.", s: "body", p: ["schwanger", "geburt", "wechsel"], i: ["koerper", "beschwerden"], w: "Bernadette Hochstätter, Yvonne Kubat, Stefanie Wedam" },
-  { t: "Yoga und Pilates", d: "femfit-Kurse, die Körper und Kopf zur Ruhe bringen.", s: "body", p: ALL, i: ["koerper"], w: "femfit" },
-  { t: "Infusionstherapie", d: "femdrop: Infusionen, die von innen heraus stärken.", s: "body", p: ["wunsch", "geburt", "wechsel"], i: ["koerper"], w: "femdrop" },
-  { t: "Shiatsu", d: "Achtsame Körperarbeit zum Loslassen.", s: "body", p: ["schwanger", "geburt", "wechsel"], i: ["koerper"], w: "Lisa Prantl, BA BSc" },
-  { t: "Ernährungsberatung", d: "Essen, das zu Ihrer Lebensphase passt, ohne Verbote.", s: "body", p: ALL, i: ["beratung", "koerper"], w: "Mag. Veronika Ottenschläger" },
-  { t: "Hautärztliche Untersuchung", d: "Muttermalkontrolle, Hautveränderungen und Beschwerden.", s: "aes", p: ALL, i: ["vorsorge", "beschwerden"], w: "OÄ Dr. Liliane Borik-Heil" },
-  { t: "Kosmetik", d: "Behandlungen bei feminin.aesthetic, einfach zum Wohlfühlen.", s: "aes", p: ["wunsch", "geburt", "wechsel"], i: ["koerper"], w: "feminin.aesthetic" },
-  { t: "Allgemeinmedizin", d: "Für alles, was nicht in ein Fachgebiet passt.", s: "gp", p: ALL, i: ["beschwerden"], w: "Dr. Irina Televca Prini" },
-  { t: "Kinderärztliche Betreuung", d: "Vorsorge, Impfungen und Hilfe, wenn Ihr Kind krank ist.", s: "kid", p: ["geburt"], i: ["kind", "vorsorge", "beschwerden"], w: "Dr. Astrid Ladurner-Mittnik" },
-  { t: "Säuglingspsychosomatik", d: "Wenn Ihr Baby viel schreit, schlecht schläft oder schlecht trinkt.", s: "kid", p: ["geburt"], i: ["kind", "beratung"], w: "Dr. Astrid Ladurner-Mittnik" },
-  { t: "Ergotherapie", d: "Unterstützung bei Entwicklung, Bewegung und Alltag.", s: "body", p: ["geburt"], i: ["kind", "koerper"], w: "Kathrin Habermann, MSc MA" }
+
+const PHASES = [
+  { id: "jugend",   t: "Jugend", d: "Erste Fragen zu Körper, Zyklus und Verhütung" },
+  { id: "mitte",    t: "Mitten im Leben", d: "Vorsorge, Beschwerden und Wohlbefinden" },
+  { id: "wunsch",   t: "Kinderwunsch", d: "Sie möchten schwanger werden" },
+  { id: "schwanger",t: "Schwanger", d: "Kontrollen, Ultraschall und die Geburt" },
+  { id: "geburt",   t: "Nach der Geburt", d: "Wochenbett, Stillen und Rückbildung" },
+  { id: "wechsel",  t: "Wechseljahre und danach", d: "Hormone, Schlaf und Wohlbefinden" },
+  { id: "kind",     t: "Für mein Kind", d: "Vom Baby bis zum Schulkind" }
+];
+const A = ["jugend", "mitte", "wunsch", "schwanger", "geburt", "wechsel"];
+const BILLING = [
+  { id: "kasse",  t: "Mit meiner Krankenkasse", d: "Wir zeigen, wo das möglich ist" },
+  { id: "wahl",   t: "Privat oder als Wahlarzt-Leistung", d: "Sie bekommen einen Teil von der Kasse zurück" },
+  { id: "egal",   t: "Weiß ich noch nicht", d: "Wir erklären beide Wege" }
 ];
 
-const state = { phase: null, intent: null, q: "" };
-const $ = id => document.getElementById(id);
-const curveY = t => (1 - t) ** 2 * 85 + 2 * t * (1 - t) * -5 + t ** 2 * 85;
-const tOf = i => 0.1 + i * 0.2;
+// g group, p phases, s services in order of fit, k words patients use
+const CONCERNS = [
+  { id: "regel", l: "Schmerzhafte Regel", g: "Zyklus und Hormone", p: ["jugend", "mitte", "wunsch"], s: ["zyklus"], k: "regelschmerzen periode menstruation krämpfe unterleibsschmerzen endometriose tage mens bauchkrämpfe" },
+  { id: "zyklus", l: "Unregelmäßiger Zyklus", g: "Zyklus und Hormone", p: ["jugend", "mitte", "wunsch"], s: ["zyklus", "kinderwunsch"], k: "zyklus periode bleibt aus regel ausbleiben unregelmäßig zwischenblutung schmierblutung" },
+  { id: "verh", l: "Verhütung", g: "Zyklus und Hormone", p: ["jugend", "mitte", "geburt"], s: ["verhuetung"], k: "pille spirale kupferspirale hormonspirale kondom verhüten verhütungsring stäbchen pille danach" },
+  { id: "hitze", l: "Hitzewallungen", g: "Zyklus und Hormone", p: ["wechsel"], s: ["wechsel"], k: "schwitzen wechseljahre menopause klimakterium hormone hormonersatz" },
+  { id: "stimmung", l: "Stimmungsschwankungen", g: "Zyklus und Hormone", p: ["jugend", "mitte", "geburt", "wechsel"], s: ["wechsel", "psycho"], k: "gereizt launisch pms reizbar stimmung" },
+  { id: "erst", l: "Mein erster Besuch bei der Frauenärztin", g: "Vorsorge und Kontrolle", p: ["jugend"], s: ["erstbesuch"], k: "erstes mal frauenarzt frauenärztin gynäkologin gynäkologe erste untersuchung" },
+  { id: "vorsorge", l: "Jährliche Vorsorge", g: "Vorsorge und Kontrolle", p: ["jugend", "mitte", "wunsch", "geburt", "wechsel"], s: ["vorsorge"], k: "krebsabstrich pap abstrich kontrolle check vorsorgeuntersuchung brust ultraschall knoten" },
+  { id: "haut", l: "Muttermale und Haut", g: "Vorsorge und Kontrolle", p: A, s: ["haut"], k: "leberfleck muttermal hautkrebs akne ausschlag ekzem juckreiz haut" },
+  { id: "op", l: "Ein Eingriff steht an", g: "Vorsorge und Kontrolle", p: ["mitte", "wunsch", "wechsel"], s: ["op"], k: "operation eingriff ambulant ausschabung polyp zyste myom" },
+  { id: "wunsch", l: "Schwanger werden", g: "Kinderwunsch und Schwangerschaft", p: ["wunsch", "mitte"], s: ["kinderwunsch", "ernaehrung"], k: "kinderwunsch schwanger werden unfruchtbar fruchtbarkeit eisprung klappt nicht baby wollen" },
+  { id: "kontrolle", l: "Kontrollen in der Schwangerschaft", g: "Kinderwunsch und Schwangerschaft", p: ["schwanger"], s: ["schwanger", "hebamme"], k: "eltern-kind-pass mutter-kind-pass schwangerschaftskontrolle schwanger test positiv" },
+  { id: "ultra", l: "Ultraschall vom Baby", g: "Kinderwunsch und Schwangerschaft", p: ["schwanger"], s: ["praenatal"], k: "organscreening nackenfalte ersttrimester screening pränatal pränataldiagnostik fehlbildung combined test" },
+  { id: "geburtvor", l: "Auf die Geburt vorbereiten", g: "Kinderwunsch und Schwangerschaft", p: ["schwanger"], s: ["hebamme", "yoga"], k: "hebamme geburt geburtsvorbereitung kurs entbindung" },
+  { id: "ungeplant", l: "Ungeplant schwanger", g: "Kinderwunsch und Schwangerschaft", p: ["schwanger", "mitte", "jugend"], s: ["abbruch"], k: "abbruch schwangerschaftsabbruch ungewollt ungeplant abtreibung" },
+  { id: "still", l: "Stillen", g: "Nach der Geburt", p: ["geburt"], s: ["still", "hebamme"], k: "stillprobleme milchstau brustentzündung muttermilch wunde brustwarzen stillberatung abpumpen" },
+  { id: "becken", l: "Beckenboden und Blase", g: "Körper", p: ["geburt", "wechsel", "mitte"], s: ["becken"], k: "inkontinenz blasenschwäche rückbildung beckenboden harndrang urin verlieren" },
+  { id: "ruecken", l: "Rücken und Gelenke", g: "Körper", p: A, s: ["physio", "shiatsu", "yoga"], k: "rückenschmerzen verspannung nacken schulter gelenke ischias" },
+  { id: "beine", l: "Schwere Beine", g: "Körper", p: ["schwanger", "geburt", "wechsel", "mitte"], s: ["physio"], k: "lymphdrainage wassereinlagerung ödeme geschwollene beine" },
+  { id: "essen", l: "Ernährung", g: "Körper", p: A, s: ["ernaehrung"], k: "essen ernährungsberatung gewicht schwangerschaftsdiabetes diät" },
+  { id: "lust", l: "Lust und Sexualität", g: "Körper", p: ["mitte", "wunsch", "geburt", "wechsel"], s: ["sexual", "wechsel"], k: "keine lust libido schmerzen beim sex trockenheit sexualität sex" },
+  { id: "unklar", l: "Beschwerden, die ich nicht einordnen kann", g: "Körper", p: A, s: ["allgemein", "vorsorge"], k: "unklar beschwerden schmerzen bauchschmerzen hausarzt allgemeinmedizin krank" },
+  { id: "muede", l: "Erschöpfung und Müdigkeit", g: "Seele", p: A, s: ["allgemein", "psycho", "infusion"], k: "müde erschöpft kraftlos energie burnout ausgelaugt eisenmangel" },
+  { id: "angst", l: "Ängste oder Traurigkeit", g: "Seele", p: A, s: ["psycho"], crisis: true, k: "angst depression traurig panik stress belastung überfordert baby blues wochenbettdepression niedergeschlagen psychotherapie" },
+  { id: "schlaf", l: "Schlafprobleme", g: "Seele", p: ["mitte", "geburt", "wechsel"], s: ["wechsel", "psycho", "shiatsu"], k: "schlafen schlaflos einschlafen durchschlafen" },
+  { id: "wohl", l: "Etwas, das einfach guttut", g: "Seele", p: A, s: ["yoga", "shiatsu", "kosmetik", "infusion"], k: "entspannung yoga pilates massage kosmetik wellness auszeit femfit femdrop" },
+  { id: "schrei", l: "Mein Baby schreit viel", g: "Für mein Kind", p: ["kind", "geburt"], s: ["saeugling", "kinderarzt"], k: "schreibaby schreien unruhig schläft schlecht trinkt schlecht koliken" },
+  { id: "kindvor", l: "Vorsorge und Impfungen", g: "Für mein Kind", p: ["kind", "geburt"], s: ["kinderarzt"], k: "impfung impfen kinderarzt kinderärztin untersuchung baby vorsorge kind" },
+  { id: "kindkrank", l: "Mein Kind ist krank", g: "Für mein Kind", p: ["kind"], s: ["kinderarzt"], k: "fieber husten schnupfen bauchweh krank kind" },
+  { id: "entw", l: "Entwicklung meines Kindes", g: "Für mein Kind", p: ["kind"], s: ["ergo", "kinderarzt"], k: "entwicklung motorik ergotherapie konzentration feinmotorik" }
+];
+const QUICK = ["hitze", "wunsch", "still", "regel", "angst", "schrei"];
 
-PHASES.forEach((ph, i) => {
-  const b = document.createElement("button");
-  b.className = "phase" + (i % 2 ? " up" : "");
-  b.style.left = tOf(i) * 100 + "%";
-  b.style.top = curveY(tOf(i)) + "%";
-  b.dataset.id = ph.id;
-  b.innerHTML = `<span class="dot"></span><span class="lbl">${ph.label}</span>`;
-  b.onclick = () => { state.phase = state.phase === ph.id ? null : ph.id; render(); };
-  $("arc").appendChild(b);
-});
+const URGENT = [
+  { re: /suizid|umbringen|nicht mehr leben|selbstmord|ritzen/, msg: `Wenn Sie daran denken, sich etwas anzutun: Die <a href="tel:142">Telefonseelsorge unter 142</a> ist rund um die Uhr für Sie da. Im Notfall rufen Sie <a href="tel:144">144</a>.` },
+  { re: /blut|notfall|starke schmerzen|ohnmacht|bewusstlos|wehen|fruchtwasser/, msg: `Bei starken Blutungen, starken Schmerzen, Wehen vor der Zeit oder Fruchtwasserabgang rufen Sie bitte <a href="tel:144">144</a> oder fahren Sie in die nächste Notaufnahme.` }
+];
 
-INTENTS.forEach(it => {
-  const b = document.createElement("button");
-  b.className = "chip";
-  b.textContent = it.label;
-  b.dataset.id = it.id;
-  b.onclick = () => { state.intent = state.intent === it.id ? null : it.id; render(); };
-  $("intents").appendChild(b);
-});
+const $ = s => document.querySelector(s);
+const app = $("#app");
+const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ß/g, "ss");
+const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const icon = (id, cls = "i") => `<svg class="${cls}" aria-hidden="true"><use href="#${id}"/></svg>`;
+const byId = (list, id) => list.find(x => x.id === id);
 
-$("search").addEventListener("input", e => { state.q = e.target.value.trim().toLowerCase(); render(); });
-$("reset").onclick = () => { Object.assign(state, { phase: null, intent: null, q: "" }); $("search").value = ""; render(); };
+let st = { step: "start", phase: null, concerns: [], billing: null, focus: null, query: "", urgent: null };
 
-function render() {
-  document.querySelectorAll(".phase").forEach(b => b.setAttribute("aria-pressed", b.dataset.id === state.phase));
-  document.querySelectorAll(".chip").forEach(b => b.setAttribute("aria-pressed", b.dataset.id === state.intent));
-  const idx = PHASES.findIndex(p => p.id === state.phase);
-  const t = tOf(idx);
-  // Trail = curve from start to the chosen phase (de Casteljau split)
-  $("trail").setAttribute("d", idx < 0 ? "" : `M0,85 Q${50 * t},${85 - 90 * t} ${100 * t},${curveY(t)}`);
-
-  const hits = SERVICES.filter(s =>
-    (!state.phase || s.p.includes(state.phase)) &&
-    (!state.intent || s.i.includes(state.intent)) &&
-    (!state.q || [s.t, s.d, s.w, SPECS[s.s].label].join(" ").toLowerCase().includes(state.q))
-  );
-
-  $("count").textContent = hits.length === 1 ? "1 Angebot für Sie" : `${hits.length} Angebote für Sie`;
-  $("reset").hidden = !(state.phase || state.intent || state.q);
-  $("list").innerHTML = hits.length ? hits.map(s => `
-    <li class="item">
-      <h3>${s.t}</h3>
-      <p>${s.d}</p>
-      <div class="meta"><span class="spec" style="--c:var(${SPECS[s.s].c})">${SPECS[s.s].label}</span><span>${s.w}</span></div>
-      <button class="book" data-n="${SERVICES.indexOf(s)}">Termin vereinbaren</button>
-    </li>`).join("")
-    : `<li class="empty">In dieser Auswahl finden wir nichts. Wählen Sie eine andere Lebensphase oder tippen Sie auf „Alles zeigen“.</li>`;
+function go(next) {
+  Object.assign(st, next);
+  const draw = () => { render(); window.scrollTo({ top: 0 }); };
+  document.startViewTransition && !matchMedia("(prefers-reduced-motion: reduce)").matches ? document.startViewTransition(draw) : draw();
 }
 
-$("list").addEventListener("click", e => {
-  const b = e.target.closest(".book");
-  if (!b) return;
-  const s = SERVICES[b.dataset.n];
-  $("sheetTitle").textContent = s.t;
-  $("sheetWho").textContent = s.w;
-  $("sheetText").textContent = "Rufen Sie uns an oder schreiben Sie uns. Wir finden gemeinsam den passenden Termin.";
-  $("sheetMail").href = `mailto:ordination@feminin.at?subject=${encodeURIComponent("Terminanfrage: " + s.t)}`;
-  $("sheet").showModal();
-});
-$("sheetClose").onclick = () => $("sheet").close();
+function progress(n) {
+  return `<div class="progress">
+    <button class="back" data-back>${icon("left")}Zurück</button>
+    <div class="bars" aria-hidden="true">${[1, 2, 3].map(i => `<span class="${i <= n ? "on" : ""}"></span>`).join("")}</div>
+    <small>Schritt ${n} von 3</small></div>`;
+}
 
+/* ---------- start: search first ---------- */
+function viewStart() {
+  return `<section class="step">
+    <h1 class="q">Was beschäftigt Sie?</h1>
+    <p class="lede">Beschreiben Sie es in Ihren eigenen Worten. Wir zeigen Ihnen, wer bei feminin dafür da ist.</p>
+    <div class="search">
+      <label class="field">${icon("search")}<span class="sr">Anliegen, Angebot oder Name suchen</span>
+        <input id="q" type="text" role="combobox" aria-expanded="false" aria-controls="sg" aria-autocomplete="list" autocomplete="off" placeholder="Zum Beispiel Hitzewallungen" value="${esc(st.query)}">
+        <button class="clear" id="qclear" type="button" aria-label="Eingabe löschen" ${st.query ? "" : "hidden"}>${icon("x")}</button>
+      </label>
+      <div class="suggest" id="sg" role="listbox" aria-label="Vorschläge" hidden></div>
+    </div>
+    <div id="urgentSlot"></div>
+    <div class="quick"><p>Häufig gesucht</p><div class="chips">${QUICK.map(id => { const c = byId(CONCERNS, id); return `<button class="chip" data-concern="${id}">${c.l}</button>`; }).join("")}</div></div>
+    <div class="or">oder</div>
+    <button class="guided" data-go="phase"><div><strong>Schritt für Schritt herausfinden</strong><span>Drei kurze Fragen zu Lebensphase, Anliegen und Abrechnung</span></div>${icon("arrow")}</button>
+  </section>`;
+}
+
+function score(text, q) {
+  const t = norm(text), words = norm(q).split(/\s+/).filter(w => w.length > 1);
+  if (!words.length) return 0;
+  let s = 0;
+  for (const w of words) { if (t.split(/[\s,·-]+/).some(x => x.startsWith(w))) s += 2; else if (w.length > 2 && t.includes(w)) s += 1; else return 0; }
+  return s;
+}
+function hl(label, q) {
+  const words = norm(q).split(/\s+/).filter(w => w.length > 1);
+  const n = norm(label); let out = "", i = 0;
+  const marks = [];
+  for (const w of words) { const j = n.indexOf(w); if (j >= 0) marks.push([j, j + w.length]); }
+  marks.sort((a, b) => a[0] - b[0]);
+  for (const [a, b] of marks) { if (a < i) continue; out += esc(label.slice(i, a)) + "<mark>" + esc(label.slice(a, b)) + "</mark>"; i = b; }
+  return out + esc(label.slice(i));
+}
+function suggestions(q) {
+  const c = CONCERNS.map(x => ({ x, s: score(x.l, q) * 2 + score(x.k, q) })).filter(r => r.s).sort((a, b) => b.s - a.s).slice(0, 5)
+    .map(r => ({ kind: "concern", id: r.x.id, label: r.x.l, sub: r.x.g }));
+  const sv = Object.entries(SERVICES).map(([id, x]) => ({ id, x, s: score(x.t + " " + x.f + " " + CONCERNS.filter(c => c.s[0] === id).map(c => c.l + " " + c.k).join(" "), q) })).filter(r => r.s).sort((a, b) => b.s - a.s).slice(0, 4)
+    .map(r => ({ kind: "service", id: r.id, label: r.x.t, sub: r.x.f }));
+  const people = [];
+  Object.entries(SERVICES).forEach(([id, x]) => x.w.split(" · ").forEach(n => { if (n.startsWith("Unsere") || !/[A-Z]/.test(n[0])) return; const name = n.split(",")[0]; if (score(name, q) && !people.some(p => p.label === name)) people.push({ kind: "service", id, label: name, sub: x.t }); }));
+  return [["Anliegen", c], ["Angebote", sv], ["Menschen", people.slice(0, 3)]].filter(g => g[1].length);
+}
+function urgentFor(text) { const n = norm(text); const u = URGENT.find(u => u.re.test(n)); return u ? u.msg : null; }
+function urgentBox(msg) { return msg ? `<div class="urgent" role="alert">${icon("alert")}<p>${msg}</p></div>` : ""; }
+
+function bindStart() {
+  const q = $("#q"), sg = $("#sg"), clr = $("#qclear");
+  let items = [], active = -1;
+  const close = () => { sg.hidden = true; q.setAttribute("aria-expanded", "false"); active = -1; };
+  const pickItem = it => it.kind === "concern" ? go({ step: "result", concerns: [it.id], phase: null, billing: null, focus: null })
+    : go({ step: "result", focus: it.id, concerns: [], phase: null, billing: null });
+  const paint = () => {
+    const v = q.value.trim(); st.query = q.value; clr.hidden = !v;
+    $("#urgentSlot").innerHTML = urgentBox(urgentFor(v));
+    if (v.length < 2) return close();
+    const groups = suggestions(v); items = groups.flatMap(g => g[1]); active = items.length ? 0 : -1;
+    let n = 0;
+    sg.innerHTML = groups.length ? groups.map(([h, list]) => `<div class="sgroup" role="group" aria-label="${h}"><h3>${h}</h3>${list.map(it => `<div class="sopt" role="option" id="o${n}" data-n="${n++}" aria-selected="false"><span>${hl(it.label, v)}</span><span class="sub">${esc(it.sub)}</span></div>`).join("")}</div>`).join("")
+      : `<div class="snone">Dazu finden wir nichts Passendes. Versuchen Sie ein anderes Wort, gehen Sie Schritt für Schritt vor oder rufen Sie uns an: <a href="tel:${TEL}">+43 1 394 01 08</a>.</div>`;
+    sg.hidden = false; q.setAttribute("aria-expanded", "true"); mark();
+  };
+  const mark = () => { sg.querySelectorAll(".sopt").forEach(o => o.setAttribute("aria-selected", +o.dataset.n === active)); if (active >= 0) { q.setAttribute("aria-activedescendant", "o" + active); $("#o" + active)?.scrollIntoView({ block: "nearest" }); } };
+  q.addEventListener("input", paint);
+  q.addEventListener("focus", () => q.value.trim().length > 1 && paint());
+  q.addEventListener("keydown", e => {
+    if (e.key === "ArrowDown" && items.length) { e.preventDefault(); active = (active + 1) % items.length; mark(); }
+    else if (e.key === "ArrowUp" && items.length) { e.preventDefault(); active = (active - 1 + items.length) % items.length; mark(); }
+    else if (e.key === "Enter" && active >= 0 && !sg.hidden) { e.preventDefault(); pickItem(items[active]); }
+    else if (e.key === "Escape") close();
+  });
+  sg.addEventListener("mousedown", e => { const o = e.target.closest(".sopt"); if (o) { e.preventDefault(); pickItem(items[+o.dataset.n]); } });
+  clr.addEventListener("click", () => { q.value = ""; paint(); q.focus(); });
+  document.addEventListener("click", e => { if (!e.target.closest(".search")) close(); }, { once: false });
+  if (st.query) paint();
+}
+
+/* ---------- guided steps ---------- */
+function viewPhase() {
+  return `<section class="step">${progress(1)}
+    <h1 class="q">In welcher Lebensphase sind Sie gerade?</h1>
+    <div class="opts">${PHASES.map(p => `<button class="opt" data-phase="${p.id}" aria-pressed="${st.phase === p.id}"><b>${p.t}</b><span>${p.d}</span>${icon("arrow")}</button>`).join("")}</div>
+  </section>`;
+}
+function viewConcerns() {
+  const list = CONCERNS.filter(c => c.p.includes(st.phase));
+  const groups = [...new Set(list.map(c => c.g))];
+  const n = st.concerns.length;
+  return `<section class="step">${progress(2)}
+    <h1 class="q">Was beschäftigt Sie?</h1>
+    <p class="lede">Wählen Sie alles, was zutrifft. Mehreres ist ausdrücklich erlaubt.</p>
+    <div class="groups">${groups.map(g => `<div><h3>${g}</h3><div class="chips">${list.filter(c => c.g === g).map(c => `<button class="chip" data-toggle="${c.id}" aria-pressed="${st.concerns.includes(c.id)}">${icon("check", "i ck")}${c.l}</button>`).join("")}</div></div>`).join("")}</div>
+    <div class="next"><button class="btn solid" data-go="billing" ${n ? "" : "disabled"}>Weiter${icon("arrow")}</button>
+      <small>${n ? `${n} ausgewählt` : "Nichts dabei? <button class=\"link\" data-go=\"start\">Lieber suchen</button>"}</small></div>
+  </section>`;
+}
+function viewBilling() {
+  return `<section class="step">${progress(3)}
+    <h1 class="q">Wie möchten Sie abrechnen?</h1>
+    <p class="lede">Bei feminin betreut Dr. Patrik Horak Patient:innen aller Kassen. Alle anderen arbeiten als Wahlärzt:innen.</p>
+    <div class="opts">${BILLING.map(b => `<button class="opt" data-billing="${b.id}" aria-pressed="${st.billing === b.id}"><b>${b.t}</b><span>${b.d}</span>${icon("arrow")}</button>`).join("")}</div>
+  </section>`;
+}
+
+/* ---------- result ---------- */
+function rank() {
+  if (st.focus) return [st.focus, ...relatedTo(st.focus)];
+  const pool = st.concerns.length ? st.concerns : CONCERNS.filter(c => c.p.includes(st.phase)).map(c => c.id);
+  const sc = {};
+  pool.forEach(cid => byId(CONCERNS, cid).s.forEach((sid, i) => { sc[sid] = (sc[sid] || 0) + (st.concerns.length ? 3 : 1) - i * 0.5; }));
+  return Object.entries(sc).sort((a, b) => b[1] - a[1]).map(e => e[0]);
+}
+function relatedTo(sid) { return [...new Set(CONCERNS.filter(c => c.s.includes(sid)).flatMap(c => c.s))].filter(x => x !== sid); }
+function reasons(sid) { return st.concerns.map(id => byId(CONCERNS, id)).filter(c => c.s.includes(sid)).map(c => c.l); }
+function billingText(s) {
+  const wahl = "Als Wahlarzt-Leistung: Wir leiten Ihre Honorarnote an Ihre Kasse weiter, Sie bekommen einen Teil zurück.";
+  if (s.gyn && st.billing === "kasse") return "Mit Kasse möglich bei Dr. Patrik Horak, für Patient:innen aller Kassen.";
+  if (s.gyn) return "Mit Kasse bei Dr. Patrik Horak. Bei allen anderen Frauenärzt:innen als Wahlarzt-Leistung mit Rückerstattung durch Ihre Kasse.";
+  return st.billing === "kasse" ? "Hier nur als Wahlarzt-Leistung. Wir leiten Ihre Honorarnote an Ihre Kasse weiter, Sie bekommen einen Teil zurück." : wahl;
+}
+function mailFor(s) {
+  const lines = ["Guten Tag,", "", `ich möchte einen Termin anfragen: ${s.t}.`];
+  if (st.phase) lines.push(`Lebensphase: ${byId(PHASES, st.phase).t}`);
+  if (st.concerns.length) lines.push(`Was mich beschäftigt: ${st.concerns.map(id => byId(CONCERNS, id).l).join(", ")}`);
+  if (st.billing) lines.push(`Abrechnung: ${byId(BILLING, st.billing).t}`);
+  lines.push("", "Name:", "Telefon:", "Wann passt es mir gut:", "", "Vielen Dank!");
+  return `mailto:${MAIL}?subject=${encodeURIComponent("Terminanfrage: " + s.t)}&body=${encodeURIComponent(lines.join("\n"))}`;
+}
+function viewResult() {
+  const ids = rank(); const best = SERVICES[ids[0]]; const rest = ids.slice(1, 5);
+  const chosen = [st.phase && byId(PHASES, st.phase).t, ...st.concerns.map(id => byId(CONCERNS, id).l), st.billing && byId(BILLING, st.billing).t].filter(Boolean);
+  const crisis = st.concerns.some(id => byId(CONCERNS, id).crisis);
+  const why = reasons(ids[0]);
+  return `<section class="step">
+    <button class="back" data-back>${icon("left")}Zurück</button>
+    <h1 class="q" style="margin-top:1rem">Das passt zu Ihnen</h1>
+    ${chosen.length ? `<ul class="mine" aria-label="Ihre Angaben">${chosen.map(c => `<li>${esc(c)}</li>`).join("")}</ul>` : ""}
+    ${crisis ? urgentBox(`Wenn es gerade sehr schwer ist: Die <a href="tel:142">Telefonseelsorge unter 142</a> ist rund um die Uhr erreichbar. Im Notfall <a href="tel:144">144</a>.`) : ""}
+    <article class="best">
+      ${why.length ? `<p class="why">Weil Sie ${why.join(" und ")} gewählt haben</p>` : `<p class="why">Unsere Empfehlung</p>`}
+      <h2>${best.t}</h2>
+      <p class="d">${best.d}</p>
+      <dl class="facts">
+        <div><dt>Bei uns</dt><dd>${esc(best.w)}</dd></div>
+        <div><dt>Fachbereich</dt><dd>${best.f}</dd></div>
+        <div><dt>Abrechnung</dt><dd>${billingText(best)}</dd></div>
+      </dl>
+      <div class="acts">
+        <a class="btn solid" href="tel:${TEL}">${icon("phone")}Termin telefonisch vereinbaren</a>
+        <a class="btn" href="${mailFor(best)}">${icon("mail")}Per E-Mail anfragen</a>
+      </div>
+    </article>
+    ${rest.length ? `<section class="also"><h2>Das könnte auch passen</h2><ul>${rest.map(id => { const s = SERVICES[id]; const r = reasons(id); return `<li class="alt"><h3>${s.t}</h3><p>${r.length ? "Passt zu: " + r.join(", ") : s.d}</p><a class="btn" href="${mailFor(s)}">Anfragen</a></li>`; }).join("")}</ul></section>` : ""}
+    <div class="restart"><button class="link" data-reset>Neu beginnen</button><button class="link" data-go="phase">Fragen noch einmal beantworten</button></div>
+    <p class="note">Montag 7 bis 19 Uhr, Dienstag bis Donnerstag 8 bis 19 Uhr, Freitag 7 bis 14 Uhr · Nusswaldgasse 5, 1190 Wien. Diese Orientierung ersetzt keine ärztliche Beratung. Bitte sagen Sie Termine spätestens 24 Stunden vorher ab, sonst können 100 € Ausfallhonorar anfallen.</p>
+  </section>`;
+}
+
+/* ---------- routing ---------- */
+const trail = [];
+function render() {
+  const v = { start: viewStart, phase: viewPhase, concerns: viewConcerns, billing: viewBilling, result: viewResult }[st.step];
+  app.innerHTML = v();
+  document.title = { start: "Was beschäftigt Sie?", phase: "Ihre Lebensphase", concerns: "Ihr Anliegen", billing: "Abrechnung", result: "Ihre Empfehlung" }[st.step] + " · feminin";
+  if (st.step === "start") bindStart();
+  const h = app.querySelector("h1"); if (h && st.step !== "start") { h.tabIndex = -1; h.focus({ preventScroll: true }); }
+}
+app.addEventListener("click", e => {
+  const t = e.target.closest("button, a"); if (!t) return;
+  const prev = st.step;
+  if (t.dataset.back !== undefined) { const back = trail.pop() || "start"; return go({ step: back }); }
+  if (t.dataset.reset !== undefined) { trail.length = 0; return go({ step: "start", phase: null, concerns: [], billing: null, focus: null, query: "" }); }
+  if (t.dataset.concern) { trail.push(prev); return go({ step: "result", concerns: [t.dataset.concern], phase: null, billing: null, focus: null }); }
+  if (t.dataset.phase) { trail.push(prev); const keep = st.phase === t.dataset.phase ? st.concerns : []; return go({ step: "concerns", phase: t.dataset.phase, concerns: keep, focus: null }); }
+  if (t.dataset.toggle) { const id = t.dataset.toggle; st.concerns = st.concerns.includes(id) ? st.concerns.filter(x => x !== id) : [...st.concerns, id]; const y = scrollY; render(); scrollTo(0, y); app.querySelector(`[data-toggle="${id}"]`)?.focus(); return; }
+  if (t.dataset.billing) { trail.push(prev); return go({ step: "result", billing: t.dataset.billing }); }
+  if (t.dataset.go) { if (t.dataset.go !== prev) trail.push(prev); return go({ step: t.dataset.go, focus: t.dataset.go === "phase" ? null : st.focus }); }
+});
 render();
 </script>
 </body>
